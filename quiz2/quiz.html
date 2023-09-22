@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Quiz</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body
+    class="container d-flex justify-content-center align-item-center bg-dark"
+  >
+    <div id="quiz-container" class="card">
+      <div class="card-header">
+        <h1 id="question"></h1>
+      </div>
+      <div class="card-body">
+        <div id="answers"></div>
+      </div>
+      <div class="card-footer">
+        <button
+          id="next-button"
+          class="btn btn-primary"
+          onclick="nextQuestion()"
+        >
+        Nechste Frage
+        </button>
+      </div>
+    </div>
+    <div id="result" hidden="true" class="card">
+      <div class="card-header">
+        <h1>Quiz beendet</h1>
+      </div>
+      <div class="card-body">
+        <p>Dein Ergebnis: <span id="score"></span> <span style="font-size: 48px;">🤪</span></p>
+
+      </div>
+      <div class="card-footer"Wenn Du noch ein mal versuchen magst, aktualisiere die Seite neu.</div>
+      
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let score = 0;
+let currentQuestionIndex = 0;
+
+let questions = [
+  {
+    question: "FRAGE",
+    answers: ['Antwort', 'Antwort', 'Antwort', 'Antwort', 'Antwort'],
+    correctAnswer: 3,
+  },
+  {
+    question: 'FRAGE',
+    answers: ['Antwort', 'Antwort', 'Antwort'],
+    correctAnswer: 2,
+  },
+  {
+    question: 'FRAGE',
+    answers: ['Antwort', 'Antwort', 'Antwort', 'Antwort'],
+    correctAnswer: 0,
+  },
+  {
+    question: 'FRAGE',
+    answers: ['Antwort', 'Antwort', 'Antwort', 'Antwort', 'Antwort', 'Antwort'],
+    correctAnswer: 2,
+  }
+];
+
+function displayQuestion() {
+  if (currentQuestionIndex >= questions.length) {
+    document.getElementById('quiz-container').hidden = true;
+    document.getElementById('result').hidden = false;
+    document.getElementById('score').textContent = score;
+    return;
+  }
+
+  let question = questions[currentQuestionIndex];
+
+  document.getElementById("question").textContent = question.question;
+
+  let answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = '';
+
+  question.answers.forEach((answer, index) => {
+    let answerButton = document.createElement("button");
+    answerButton.classList.add('btn', 'btn-dark', 'm-4')
+    answerButton.textContent = answer;
+    answerButton.onclick = () => checkAnswer(index);
+    answersDiv.appendChild(answerButton);
+  });
+}
+displayQuestion();
+
+function checkAnswer(userAnswer) {
+  let correctAnswer = questions[currentQuestionIndex].correctAnswer;
+  if (userAnswer == correctAnswer) {
+    score += 1;
+  } else {
+    alert(`Ответ, к сожалению, оказался неверным.`);
+  }
+  nextQuestion();
+}
+
+function nextQuestion() {
+  currentQuestionIndex += 1;
+  displayQuestion();
+}
+    </script>
+  </body>
+</html>
