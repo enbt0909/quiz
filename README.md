@@ -1,1 +1,1 @@
-# quiz
+# Das Quizspiel
